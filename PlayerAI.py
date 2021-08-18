@@ -72,7 +72,8 @@ class PlayerAI(BaseAI):
     #Encontrar la utilidad mas grande para cuando la computadura juega 
     def Maximize(self, alpha, beta, depth, start): #self nos referimos a una instancia de la clase,
         #Alpha nos referimos a nodo  alfa, beta nodo beta, con depth nos referimos a la profundidad y start para el tiempo
-        if PlayerAI.terminal(self) or depth == 0 or (time.perf_counter() - start) > 0.02: #terminal evaluamos si no hay mas movimientos disponibles
+        if PlayerAI.terminal(self) or depth == 0 or (time.perf_counter() - start) > 0.02:
+            #terminal evaluamos si no hay mas movimientos disponibles
             #o la profundidad se compara a 0 (es decir que no tiene donde mas explorar)
             #o si el tiempo se pasa entonces retornada la instancia.eval
             return PlayerAI.Eval(self)
