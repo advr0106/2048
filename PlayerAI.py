@@ -93,34 +93,43 @@ class PlayerAI(BaseAI):
         return maxUtility
 
     # Encuentra la utilidad mas pequeña para a computadora cuando coloca las fichas en los cuadritos aleatoriamente. 
-    def Minimize(self, alpha, beta, depth, start):
-        if PlayerAI.terminal(self) or depth == 0 or (time.perf_counter() - start) > 0.02:
-            return PlayerAI.Eval(self)
+    def Minimize(self, alpha, beta, depth, start): #self nos referimos a una instancia de la clase,
+        #Alpha nos referimos a nodo  alfa, beta nodo beta, con depth nos referimos a la profundidad y start para el tiempo
+        #Aqui evaluamos si la terminal esta siendo ejecuta o la profundidad se compara a 0 (es decir que no tiene donde mas explorar)
+        #o si el tiempo se pasa entonces retornada la instancia.eval que es para que se evalue mediante la heuristica
+        if PlayerAI.terminal(self) or depth == 0 or (time.perf_counter() - start) > 0.02: 
+            return PlayerAI.Eval(self) 
 
-        minUtility = np.inf
+        minUtility = np.inf #Estamos asignandole el valor de infinito para la comparacion
 
-        empty = self.getAvailableCells();
+        empty = self.getAvailableCells(); #Aqui obtenemos los cuadritos vacios
 
-        children = []
+        children = [] #Aqui creamos una lista de hijos
 
+        # Atendiendo a las casillas que estan vacias, creamos una lista de hijos
         for pos in empty:
+            
+            # Creamos dos copias del tablero como se encuentra actualmente. 
             current_grid2 = self.clone()
             current_grid4 = self.clone()
 
+            # Agregamos una ficha de 2 en la posicion que nosotros le asignamos
             current_grid2.insertTile(pos, 2)
+            # Agregamos una ficha de 4 en la posicion que nosotros le asignamos
             current_grid4.insertTile(pos, 4)
 
+            # Luego agregamos estas posibilidades a los hijos
             children.append(current_grid2)
             children.append(current_grid4)
 
-        #Los nodos hijos para cuando la computadora  juega aleatorio incluyendo todas las casillas posibles para su estado actual 
+        #Los nodos hijos para cuando la computadora juega aleatorio incluyendo todas las casillas posibles para su estado actual 
         for child in children:
-            minUtility = min(minUtility,
-                             PlayerAI.Maximize(self=child, alpha=alpha, beta=beta, depth=depth - 1, start=start))
-
+            #vamos a evaluzar el minimo entre infinito y el valor que nos devolvera el nodo maximizado y luego comparemos
+            minUtility = min(minUtility, PlayerAI.Maximize(self=child, alpha=alpha, beta=beta, depth=depth - 1, start=start))
+            #si lo que da es menor o igual que alpha rompemos el ciclo
             if minUtility <= alpha:
                 break
-
+            #y como este cumple ese parametro le asignamos a beta el menor entre minutility y beta
             beta = min(minUtility, beta)
-
+        
         return minUtility
