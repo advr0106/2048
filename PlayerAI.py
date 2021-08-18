@@ -70,26 +70,30 @@ class PlayerAI(BaseAI):
         else:
             return PlayerAI.Minimize(self=self, alpha=-np.inf, beta=np.inf, depth=limit, start=start)
 
-    # Finds the largest utility for the Max Player(Computer playing the game)
-    def Maximize(self, alpha, beta, depth, start):
-        if PlayerAI.terminal(self) or depth == 0 or (time.perf_counter() - start) > 0.02:
+    #Encontrar la utilidad mas grande para cuando la computadura juega 
+    def Maximize(self, alpha, beta, depth, start): #self nos referimos a una instancia de la clase,
+        #Alpha nos referimos a nodo  alfa, beta nodo beta, con depth nos referimos a la profundidad y start para el tiempo
+        if PlayerAI.terminal(self) or depth == 0 or (time.perf_counter() - start) > 0.02: #Aqui evaluamos si la terminal esta siendo
+            #ejecuta o la profundidad se compara a 0 (es decir que no tiene donde mas explorar)
+            #o si el tiempo se pasa entonces retornada la instancia.eval
             return PlayerAI.Eval(self)
 
-        maxUtility = -np.inf
+        maxUtility = -np.inf #Estamos asignandole el valor de -infinito para la comparacion
 
-        # The children for the Max player are the neighboring tiles
-        for child in PlayerAI.children(self):
+        #Los nodos hijos para la computadora cuando juega el juego son los cuadritos vecinos
+        for child in  PlayerAI.children(self): #para los hijos del nodo 
             maxUtility = max(maxUtility,
                              PlayerAI.Minimize(self=child, alpha=alpha, beta=beta, depth=depth - 1, start=start))
-
+            #vamos a evaluzar el maximo entre - infinito y el valor que nos devolvera el nodo minimizado y luego comparemos
+            #si lo que da es mas que beta rompemos el ciclo
             if maxUtility >= beta:
                 break
-
+            #y como este cumple ese parametro le asignamos a alpha el mayor entre maxutility y alpha 
             alpha = max(maxUtility, alpha)
-
+            
         return maxUtility
 
-    # Finds the smallest utility for the Min Player(Computer placing the random tiles)
+    # Encuentra la utilidad mas pequeña para a computadora cuando coloca las fichas en los cuadritos aleatoriamente. 
     def Minimize(self, alpha, beta, depth, start):
         if PlayerAI.terminal(self) or depth == 0 or (time.perf_counter() - start) > 0.02:
             return PlayerAI.Eval(self)
@@ -110,7 +114,7 @@ class PlayerAI(BaseAI):
             children.append(current_grid2)
             children.append(current_grid4)
 
-        # The children for the Min player include all random tile possibilities for the current state
+        #Los nodos hijos para cuando la computadora  juega aleatorio incluyendo todas las casillas posibles para su estado actual 
         for child in children:
             minUtility = min(minUtility,
                              PlayerAI.Maximize(self=child, alpha=alpha, beta=beta, depth=depth - 1, start=start))
