@@ -80,7 +80,7 @@ class PlayerAI(BaseAI):
 
         maxUtility = -np.inf #Estamos asignandole el valor de -infinito para la comparacion
 
-        #Los nodos hijos para la computadora cuando juega el juego son los cuadritos vecinos
+        #Los nodos hijos para la computadora cuando juega el juego son los casillas vecinos
         for child in  PlayerAI.children(self): #para los hijos del nodo 
             maxUtility = max(maxUtility,
                              PlayerAI.Minimize(self=child, alpha=alpha, beta=beta, depth=depth - 1, start=start))
@@ -93,7 +93,7 @@ class PlayerAI(BaseAI):
             
         return maxUtility
 
-    # Encuentra la utilidad mas pequeña para a computadora cuando coloca las fichas en los cuadritos aleatoriamente. 
+    # Encuentra la utilidad mas pequeña para a computadora cuando coloca las fichas en los casillas aleatoriamente. 
     def Minimize(self, alpha, beta, depth, start): #self nos referimos a una instancia de la clase,
         #Alpha nos referimos a nodo  alfa, beta nodo beta, con depth nos referimos a la profundidad y start para el tiempo
         #En terminal evaluamos si no hay mas movimientos disponibles o la profundidad se compara a 0 (es decir que no tiene donde mas explorar)
@@ -103,7 +103,7 @@ class PlayerAI(BaseAI):
 
         minUtility = np.inf #Estamos asignandole el valor de infinito para la comparacion
 
-        empty = self.getAvailableCells(); #Aqui obtenemos los cuadritos vacios
+        empty = self.getAvailableCells(); #Aqui obtenemos los casillas vacios
 
         children = [] #Aqui creamos una lista de hijos
 
