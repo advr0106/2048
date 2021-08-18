@@ -26,7 +26,7 @@ class PlayerAI(BaseAI):
         temp.move(dir)
         return temp
 
-    # Optiene a los hijos del nodo
+    # Obtiene a los hijos del nodo
     def children(self):
         children = []
         for move in self.getAvailableMoves():
@@ -39,7 +39,7 @@ class PlayerAI(BaseAI):
 
     # Evalua la Heuristica
     def Eval(self):
-
+    
 
         if PlayerAI.terminal(self):
             return -np.inf
@@ -72,8 +72,8 @@ class PlayerAI(BaseAI):
     #Encontrar la utilidad mas grande para cuando la computadura juega 
     def Maximize(self, alpha, beta, depth, start): #self nos referimos a una instancia de la clase,
         #Alpha nos referimos a nodo  alfa, beta nodo beta, con depth nos referimos a la profundidad y start para el tiempo
-        if PlayerAI.terminal(self) or depth == 0 or (time.perf_counter() - start) > 0.02: #Aqui evaluamos si la terminal esta siendo
-            #ejecuta o la profundidad se compara a 0 (es decir que no tiene donde mas explorar)
+        if PlayerAI.terminal(self) or depth == 0 or (time.perf_counter() - start) > 0.02: #terminal evaluamos si no hay mas movimientos disponibles
+            #o la profundidad se compara a 0 (es decir que no tiene donde mas explorar)
             #o si el tiempo se pasa entonces retornada la instancia.eval
             return PlayerAI.Eval(self)
 
@@ -95,7 +95,7 @@ class PlayerAI(BaseAI):
     # Encuentra la utilidad mas pequeña para a computadora cuando coloca las fichas en los cuadritos aleatoriamente. 
     def Minimize(self, alpha, beta, depth, start): #self nos referimos a una instancia de la clase,
         #Alpha nos referimos a nodo  alfa, beta nodo beta, con depth nos referimos a la profundidad y start para el tiempo
-        #Aqui evaluamos si la terminal esta siendo ejecuta o la profundidad se compara a 0 (es decir que no tiene donde mas explorar)
+        #En terminal evaluamos si no hay mas movimientos disponibles o la profundidad se compara a 0 (es decir que no tiene donde mas explorar)
         #o si el tiempo se pasa entonces retornada la instancia.eval que es para que se evalue mediante la heuristica
         if PlayerAI.terminal(self) or depth == 0 or (time.perf_counter() - start) > 0.02: 
             return PlayerAI.Eval(self) 
