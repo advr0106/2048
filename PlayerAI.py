@@ -39,8 +39,7 @@ class PlayerAI(BaseAI):
 
     # Evaluates the heuristic. The heuristic used here is a gradient function
     def Eval(self):
-        import math
-        import numpy as np
+
 
         if PlayerAI.terminal(self):
             return -np.inf
