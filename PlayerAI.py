@@ -26,18 +26,18 @@ class PlayerAI(BaseAI):
         temp.move(dir)
         return temp
 
-    # Gets all the Children of a node
+    # Optiene a los hijos del nodo
     def children(self):
         children = []
         for move in self.getAvailableMoves():
             children.append(PlayerAI.getChild(self, move))
         return children
 
-    # Returns true if the node is terminal
+    # Retorna verdadero si el Nodo ha terminado
     def terminal(self):
         return not self.canMove()
 
-    # Evaluates the heuristic. The heuristic used here is a gradient function
+    # Evalua la Heuristica
     def Eval(self):
         import math
         import numpy as np
