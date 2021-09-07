@@ -92,7 +92,7 @@ class PlayerAI(BaseAI):
             
         return maxUtility
 
-    # Encuentra la utilidad mas pequeña para a computadora cuando coloca las fichas en los cuadritos aleatoriamente. 
+    # Encuentra la utilidad mas pequeña para la computadora cuando coloca las fichas en los cuadritos aleatoriamente. 
     def Minimize(self, alpha, beta, depth, start): #self nos referimos a una instancia de la clase,
         #Alpha nos referimos a nodo  alfa, beta nodo beta, con depth nos referimos a la profundidad y start para el tiempo
         #En terminal evaluamos si no hay mas movimientos disponibles o la profundidad se compara a 0 (es decir que no tiene donde mas explorar)
